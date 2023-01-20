@@ -18,23 +18,38 @@ export async function login(req, res) {
       return res.status(400).send("Usuário ou senha incorretos");
     }
 
-    const checkSession = await db.collection("sessions").findOne({ idUsuario: email });
+    const checkSession = await db
+      .collection("sessions")
+      .findOne({ _id: checkUser._id});
     if (checkSession) {
       await db.collection("sessions").updateOne(
-        { idUsuario: email },
+        { _id: checkUser._id },
         {
           $set: { token: newToken },
         }
-      );    
+      );
     } else {
       const existingUser = await db
         .collection("sessions")
-        .findOne({ idUsuario: email });
+        .findOne({ _id: checkUser._id });
       if (!existingUser) {
         await db
           .collection("sessions")
-          .insertOne({ idUsuario: email, token: newToken });
+          .insertOne({ _id: checkUser._id, token: newToken });
       }
+    }
+
+    const checkWalet = await db
+      .collection("wallets")
+      .findOne({_id: checkUser._id });
+
+    if (!checkWalet) {
+      const userWallet = {
+        _id: checkUser._id,
+        name: checkUser.name,
+        wallet: [],
+      };
+      await db.collection("wallets").insertOne(userWallet)
     }
     return res.status(202).send(newToken);
   } catch (error) {
