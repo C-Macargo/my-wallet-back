@@ -1,5 +1,6 @@
 import db from "../config/database.js";
 import dayjs from "dayjs";
+import { WalletSchema } from "../model/WalletSchema.js";
 
 export async function deposit(req, res) {
   const time = dayjs().format("DD/MM/YYYY");
@@ -9,6 +10,15 @@ export async function deposit(req, res) {
   const { value, description} = req.body;
 
 
+  const { error } = WalletSchema.validate({
+    value,
+    description,
+  });
+
+  if (error) {
+    const errorMessage = error.details.map((err) => err.message);
+    return res.status(422).send(errorMessage);
+  }
 
 
   if (!userSession)
