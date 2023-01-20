@@ -43,7 +43,7 @@ export async function login(req, res) {
       .collection("wallets")
       .findOne({ _id: checkUser._id });
 
-    if (!checkWalet) {
+    if (checkWalet) {
       const userWallet = {
         _id: checkUser._id,
         name: checkUser.name,

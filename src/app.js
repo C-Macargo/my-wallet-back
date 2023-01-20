@@ -13,7 +13,7 @@ server.use([authRouter])
 server.use([walletRouter])
 
 
-server.listen(5000, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
