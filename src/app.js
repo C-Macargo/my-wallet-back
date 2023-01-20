@@ -1,12 +1,18 @@
-import express from "express";
-import cors from "cors";
+import authRouter from "./routes/AuthRoutes.js"
+import express from "express"
+import cors from "cors"
 
-const PORT = 5000;
+let PORT = 5000
 
-const app = express();
-app.use(express.json());
-app.use(cors());
+const server = express()
+server.use(express.json())
+server.use(cors())
+
+server.use([authRouter])
 
 
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);});
+server.listen(5000, () => {
+  console.log(`Server running on port ${PORT}`)
+})
+
+
