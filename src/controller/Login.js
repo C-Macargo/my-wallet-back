@@ -20,7 +20,7 @@ export async function login(req, res) {
 
     const checkSession = await db
       .collection("sessions")
-      .findOne({ _id: checkUser._id});
+      .findOne({ _id: checkUser._id });
     if (checkSession) {
       await db.collection("sessions").updateOne(
         { _id: checkUser._id },
@@ -41,7 +41,7 @@ export async function login(req, res) {
 
     const checkWalet = await db
       .collection("wallets")
-      .findOne({_id: checkUser._id });
+      .findOne({ _id: checkUser._id });
 
     if (!checkWalet) {
       const userWallet = {
@@ -49,7 +49,7 @@ export async function login(req, res) {
         name: checkUser.name,
         wallet: [],
       };
-      await db.collection("wallets").insertOne(userWallet)
+      await db.collection("wallets").insertOne(userWallet);
     }
     return res.status(202).send(newToken);
   } catch (error) {
