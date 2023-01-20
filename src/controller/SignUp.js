@@ -19,6 +19,12 @@ export async function signUp(req, res) {
   const encryptedPassword = bcrypt.hashSync(password, 10);
 
   try {
+    const existingEmail = await db
+      .collection("users")
+      .findOne({ email: email });
+    if (existingEmail)
+      return res.status(400).send("Este email já está sendo usado!");
+
     await db
       .collection("users")
       .insertOne({ name, email, password: encryptedPassword });
@@ -27,4 +33,3 @@ export async function signUp(req, res) {
     res.status(500).send(error.message);
   }
 }
-
