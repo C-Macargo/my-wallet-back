@@ -1,15 +1,12 @@
 import db from "../config/database.js";
 import dayjs from "dayjs";
 
-export async function deposit(req, res) {
+export async function withdraw(req, res) {
   const time = dayjs().format("DD/MM/YYYY");
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
   const userSession = await db.collection("sessions").findOne({ token });
-  const { value, description} = req.body;
-
-
-
+  const { value, description, date } = req.body;
 
   if (!userSession)
     return res.status(422).send("Você não tem acesso, infome o token");
@@ -24,8 +21,8 @@ export async function deposit(req, res) {
       const Transaction = {
         value,
         description,
-        date : time ,
-        type: "Deposit",
+        date : time,
+        type: "withdraw",
       };
       await db
         .collection("wallets")
