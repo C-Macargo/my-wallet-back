@@ -2,7 +2,7 @@ import db from "../config/database.js";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 
-export async function login(req, res) {
+export async function signIn(req, res) {
   const { email, password } = req.body;
 
   const newToken = uuidv4();
@@ -43,7 +43,7 @@ export async function login(req, res) {
       .collection("wallets")
       .findOne({ _id: checkUser._id });
 
-    if (checkWalet) {
+    if (!checkWalet) {
       const userWallet = {
         _id: checkUser._id,
         name: checkUser.name,

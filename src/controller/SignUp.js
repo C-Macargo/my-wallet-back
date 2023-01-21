@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import db from "../config/database.js";
-import { signUpSchema } from "../model/SignUpSchema.js";
+import { signUpSchema } from "../schemas/SignUpSchema.js";
 
 export async function signUp(req, res) {
   const { name, email, password, confirmPassword } = req.body;

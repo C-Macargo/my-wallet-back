@@ -13,6 +13,7 @@ export async function walletContent(req, res) {
     const userWallet = await db
       .collection("wallets")
       .findOne({ _id: userSession._id });
+      console.log
     const { name, wallet } = userWallet;
     return res.status(202).send({ name, wallet });
   }

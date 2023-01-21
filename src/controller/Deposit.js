@@ -1,14 +1,13 @@
 import db from "../config/database.js";
 import dayjs from "dayjs";
-import { WalletSchema } from "../model/WalletSchema.js";
+import { WalletSchema } from "../schemas/WalletSchema.js";
 
 export async function deposit(req, res) {
   const time = dayjs().format("DD/MM/YYYY");
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
   const userSession = await db.collection("sessions").findOne({ token });
-  const { value, description} = req.body;
-
+  const { value, description } = req.body;
 
   const { error } = WalletSchema.validate({
     value,
@@ -19,7 +18,6 @@ export async function deposit(req, res) {
     const errorMessage = error.details.map((err) => err.message);
     return res.status(422).send(errorMessage);
   }
-
 
   if (!userSession)
     return res.status(422).send("Você não tem acesso, infome o token");
@@ -34,8 +32,8 @@ export async function deposit(req, res) {
       const Transaction = {
         value,
         description,
-        date : time ,
-        type: "Deposit",
+        date: time,
+        type: "deposit",
       };
       await db
         .collection("wallets")
