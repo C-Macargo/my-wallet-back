@@ -3,6 +3,7 @@ import { Router } from 'express'
 import { signIn } from "../controller/SignIn.js"
 import { listUsers } from "../controller/Users.js"
 
+
 const authRouter = Router()
 
 authRouter.post("/sign-up", signUp)

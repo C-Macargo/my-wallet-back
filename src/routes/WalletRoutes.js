@@ -1,13 +1,14 @@
 import { Router } from 'express'
 import { walletContent } from '../controller/Wallet.js'
-import { deposit } from '../controller/Deposit.js'
-import { withdraw } from '../controller/Withdraw.js'
+import { transaction } from '../controller/Transaction.js'
+import { walletMiddleware } from '../middlewares/WalletMiddleware.js'
+
 
 const walletRouter = Router()
 
-walletRouter.get("/wallet", walletContent)
-walletRouter.post("/wallet/deposit", deposit)
-walletRouter.post("/wallet/withdraw", withdraw)
+walletRouter.use(walletMiddleware)
 
+walletRouter.get("/wallet", walletContent)
+walletRouter.post("/transaction", transaction)
 
 export default walletRouter

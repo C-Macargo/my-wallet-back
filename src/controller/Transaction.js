@@ -2,13 +2,10 @@ import db from "../config/database.js";
 import dayjs from "dayjs";
 import { WalletSchema } from "../schemas/WalletSchema.js";
 
-
-export async function withdraw(req, res) {
+export async function transaction(req, res) {
   const time = dayjs().format("DD/MM/YYYY");
-  const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
-  const userSession = await db.collection("sessions").findOne({ token });
-  const { value, description} = req.body;
+  const userSession = res.locals.session;
+  const { value, description , type} = req.body;
 
   const { error } = WalletSchema.validate({
     value,
@@ -33,8 +30,8 @@ export async function withdraw(req, res) {
       const Transaction = {
         value,
         description,
-        date : time,
-        type: "withdraw",
+        date: time,
+        type
       };
       await db
         .collection("wallets")
