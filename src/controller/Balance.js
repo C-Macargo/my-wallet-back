@@ -17,7 +17,7 @@ try{
     userTransactions[0].wallet.map((t) =>
       t.type === "deposit" ? (saldo += parseFloat(t.value)) : (saldo -= parseFloat(t.value))
     );
-    res.status(200).json(saldo)
+    res.status(200).json(saldo.toFixed(2))
   } else {
     res.status(200).send("No transactons");
   }
