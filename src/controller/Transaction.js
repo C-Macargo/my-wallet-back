@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { WalletSchema } from "../schemas/WalletSchema.js";
 
 export async function transaction(req, res) {
-  const time = dayjs().format("DD/MM/YYYY");
+  const time = dayjs().format("DD/MM");
   const userSession = res.locals.session;
   const { value, description , type} = req.body;
 
