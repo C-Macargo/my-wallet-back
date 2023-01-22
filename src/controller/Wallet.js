@@ -11,7 +11,8 @@ export async function walletContent(req, res) {
   const { name, wallet } = userWallet;
   return res.status(202).send({ name, wallet });
 
-
-
-
 }
+
+
+
+
